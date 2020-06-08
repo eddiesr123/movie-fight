@@ -1,5 +1,6 @@
 import { createAutoComplete } from './autocomplete.js';
 import { movieTemplate } from './movietemplate.js';
+import { API_KEY } from './apikey.js';
 
 const autoCompleteConfig = {
 	renderOption : (movie) => {
@@ -12,7 +13,7 @@ const autoCompleteConfig = {
 	inputValue   : (movie) => movie.Title,
 	fetchData    : async (searchTerm) => {
 		const response = await axios.get('http://www.omdbapi.com/', {
-			params : { apikey: '71b08367', s: searchTerm }
+			params : { apikey: API_KEY, s: searchTerm }
 		});
 		if (response.data.Error) return [];
 		return response.data.Search;
@@ -39,7 +40,7 @@ createAutoComplete({
 const onMovieSelect = async (movie, summaryElement) => {
 	const response = await axios.get('http://www.omdbapi.com/', {
 		params : {
-			apikey : '71b08367',
+			apikey : API_KEY,
 			i      : movie.imdbID
 		}
 	});
